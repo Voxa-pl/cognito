@@ -826,6 +826,14 @@ export const useUserStore = create<UserState>()(
             badges,
           };
 
+          if (typeof window !== 'undefined') {
+            try {
+              localStorage.setItem(`cognito_onboarded_${updatedUser.id}`, 'true');
+            } catch {
+              // Ignore storage error
+            }
+          }
+
           upsertProfileToSupabase({
             id: updatedUser.id,
             email: updatedUser.email || `${updatedUser.id}@guest.cognito`,

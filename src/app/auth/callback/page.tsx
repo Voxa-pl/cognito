@@ -63,11 +63,22 @@ export default function AuthCallbackPage() {
         // Check if profile exists in Supabase
         const { data: profile } = await fetchProfileFromSupabase(authUser.id);
 
+        let isOnboarded = false;
+        try {
+          const localFlag = localStorage.getItem(`cognito_onboarded_${authUser.id}`);
+          if (localFlag === 'true' || (profile as any)?.is_onboarded === true) {
+            isOnboarded = true;
+          }
+        } catch {
+          // Ignore storage error
+        }
+
         loginWithGoogle({
           id: authUser.id,
           email: authUser.email || '',
           fullName,
           avatarUrl,
+          isOnboarded,
         });
 
         let targetRedirect = paramRedirect || '/dashboard';
@@ -81,12 +92,7 @@ export default function AuthCallbackPage() {
           // Ignore storage error
         }
 
-        if (profile?.grade) {
-          useUserStore.getState().completeOnboarding({
-            grade: (profile.grade as 9 | 10 | 11 | 12) || 9,
-            isRepeater: Boolean(profile.is_repeater),
-            fullName: profile.full_name || fullName,
-          });
+        if (isOnboarded) {
           router.replace(targetRedirect);
         } else {
           router.replace('/onboarding');
