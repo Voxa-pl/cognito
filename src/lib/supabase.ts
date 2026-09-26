@@ -3,8 +3,8 @@ import { MistakeRecord, DuelRoom } from '@/types';
 import { normalizeDuelRoomCode } from '@/lib/gamification/duels';
 
 export function getSupabaseCredentials(): { url: string; key: string; isConfigured: boolean } {
-  let url = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-  let key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
+  let url = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://bjhvwwrqmjzsxkivzdol.supabase.co';
+  let key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'sb_publishable_aw3q4UxGLOdLjWRoH9Ke-Q_2lE1duif';
 
   if (typeof window !== 'undefined') {
     try {
