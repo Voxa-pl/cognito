@@ -58,7 +58,7 @@ export default function DashboardPage() {
   })();
 
   const currentLevel = user?.level || 1;
-  const currentXP = user?.totalXP || 450;
+  const currentXP = user?.totalXP ?? 0;
   const xpInLevel = currentXP % 250;
   const xpPercent = Math.min(100, Math.round((xpInLevel / 250) * 100));
 
@@ -74,7 +74,7 @@ export default function DashboardPage() {
               </span>
               <span className="flex items-center gap-1 rounded-full bg-[#fff0db] dark:bg-[#ff9600]/20 border border-[#ffb74d] dark:border-[#ff9600]/40 px-3 py-1 text-xs font-black text-[#ff9600]">
                 <Flame className="w-3.5 h-3.5 fill-[#ff9600]" />
-                {user?.currentStreak || 3} Günlük İstikrar
+                {user?.currentStreak ?? 0} Günlük İstikrar
               </span>
               {user?.learningMode === 'phoenix' ? (
                 <span className="flex items-center gap-1.5 rounded-full bg-[#ffe8cc] dark:bg-[#ff9600]/20 border border-[#ffb74d] dark:border-[#ff9600]/40 px-3 py-1 text-xs font-black text-[#d97706] dark:text-[#ff9600]">

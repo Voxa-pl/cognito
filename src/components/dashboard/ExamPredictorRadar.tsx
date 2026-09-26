@@ -106,6 +106,14 @@ export function ExamPredictorRadar() {
   }, [topicProgress, latestPlacement]);
 
   const scoreLevel = useMemo(() => {
+    if (predictedScore === 0) {
+      return {
+        label: 'Kazanım Değerlendirmesi Bekleniyor (0 / 100)',
+        textColor: 'text-slate-500 dark:text-[#94a3b8]',
+        badgeBg: 'bg-slate-100 dark:bg-[#0f172a] border-slate-200 dark:border-[#334155]',
+        note: 'Ders testlerini ve kazanım denemelerini çözerek ilk tahmin skorunu oluştur.',
+      };
+    }
     if (predictedScore >= 85) {
       return {
         label: 'Takdir Belgesi Seviyesi (85 - 100)',

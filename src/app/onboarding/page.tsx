@@ -27,15 +27,13 @@ export default function OnboardingPage() {
   const [step, setStep] = useState<1 | 2 | 3>(1);
   const [selectedGrade, setSelectedGrade] = useState<GradeOption>(user?.grade || 9);
   const [isRepeater, setIsRepeater] = useState<boolean>(user?.isRepeater ?? false);
-  const [fullName, setFullName] = useState<string>(user?.fullName || user?.username || 'Öğrenci');
+  const [fullName, setFullName] = useState<string>('');
+  const [nameError, setNameError] = useState<string | null>(null);
   const [hasMounted, setHasMounted] = useState(false);
 
   useEffect(() => {
     setHasMounted(true);
-    if (user?.fullName || user?.username) {
-      setFullName(user.fullName || user.username);
-    }
-  }, [user]);
+  }, []);
 
   // Protect onboarding: user must be authenticated
   useEffect(() => {
@@ -54,17 +52,22 @@ export default function OnboardingPage() {
 
   const handleNextStep = () => {
     sounds.playClick();
+    setNameError(null);
     if (step === 1) {
       setStep(2);
     } else if (step === 2) {
       setStep(3);
     } else if (step === 3) {
+      if (!fullName.trim()) {
+        setNameError('Lütfen adınızı ve soyadınızı yazınız.');
+        return;
+      }
       // Complete onboarding
       sounds.playChest();
       completeOnboarding({
         grade: selectedGrade,
         isRepeater,
-        fullName: fullName.trim() || 'Öğrenci',
+        fullName: fullName.trim(),
       });
       router.push('/dashboard');
     }
@@ -382,14 +385,27 @@ export default function OnboardingPage() {
                 <input
                   type="text"
                   value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
-                  placeholder="Adınız Soyadınız"
-                  className="w-full rounded-2xl border-2 border-[#e5e5e5] dark:border-[#334155] bg-white dark:bg-[#0f172a] px-4 py-3.5 text-base sm:text-lg font-black text-[#3c3c3c] dark:text-[#f8fafc] focus:border-[#1cb0f6] outline-none transition-all"
+                  onChange={(e) => {
+                    setFullName(e.target.value);
+                    if (nameError) setNameError(null);
+                  }}
+                  placeholder="Örn: Ahmet Yılmaz"
+                  className={`w-full rounded-2xl border-2 bg-white dark:bg-[#0f172a] px-4 py-3.5 text-base sm:text-lg font-black text-[#3c3c3c] dark:text-[#f8fafc] focus:border-[#1cb0f6] outline-none transition-all ${
+                    nameError
+                      ? 'border-[#ea2b2b] focus:border-[#ea2b2b]'
+                      : 'border-[#e5e5e5] dark:border-[#334155]'
+                  }`}
                   autoFocus
                 />
-                <p className="mt-1.5 text-xs font-semibold text-[#afafaf] dark:text-[#64748b]">
-                  Google hesabından otomatik alındı; dilediğin gibi düzenleyebilirsin.
-                </p>
+                {nameError ? (
+                  <p className="mt-1.5 text-xs font-bold text-[#ea2b2b]">
+                    {nameError}
+                  </p>
+                ) : (
+                  <p className="mt-1.5 text-xs font-semibold text-[#afafaf] dark:text-[#64748b]">
+                    Derslerinizde, sınav karnenizde ve klanınızda bu isim kullanılacaktır.
+                  </p>
+                )}
               </div>
 
               {/* Summary Card */}

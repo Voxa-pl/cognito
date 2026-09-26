@@ -71,14 +71,14 @@ export default function ProfilePage() {
   const totalQuizzes = quizHistory.length;
   const totalCorrect = quizHistory.reduce((sum, q) => sum + q.score, 0);
   const totalQuestions = quizHistory.reduce((sum, q) => sum + q.totalQuestions, 0);
-  const accuracy = totalQuestions > 0 ? Math.round((totalCorrect / totalQuestions) * 100) : 88;
+  const accuracy = totalQuestions > 0 ? Math.round((totalCorrect / totalQuestions) * 100) : 0;
 
   const currentLevel = user?.level || 1;
-  const totalXP = user?.totalXP || 450;
+  const totalXP = user?.totalXP ?? 0;
   const xpInLevel = totalXP % 250;
   const levelProgress = Math.min(100, Math.round((xpInLevel / 250) * 100));
 
-  const earnedBadges = user?.badges || ['haftalik-istikrar', 'pisagor-ustasi'];
+  const earnedBadges = user?.badges || [];
 
   const handleSaveName = (e?: React.FormEvent) => {
     if (e) e.preventDefault();
@@ -243,7 +243,7 @@ export default function ProfilePage() {
                 <Flame className="w-6 h-6 fill-[#ff9600]" />
               </div>
               <div className="text-xl font-black text-[#3c3c3c] dark:text-[#f8fafc]">
-                {user?.currentStreak || 3} Gün
+                {user?.currentStreak ?? 0} Gün
               </div>
               <div className="text-[10px] font-black text-[#777777] dark:text-[#94a3b8] uppercase tracking-wide">
                 Mevcut Seri

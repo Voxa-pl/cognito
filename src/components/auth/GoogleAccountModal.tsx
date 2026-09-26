@@ -119,7 +119,7 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-public-key`;
     onSelectAccount({
       id: 'cognito-demo-user',
       email: 'demo@cognito.edu.tr',
-      fullName: 'Demo Öğrenci',
+      fullName: '',
       avatarUrl: 'user',
       isOnboarded: false,
     });

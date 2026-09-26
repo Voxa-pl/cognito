@@ -39,16 +39,16 @@ export type GameMode = 'challenge' | 'practice';
 const defaultUser: UserProfile = {
   id: 'student-main',
   username: 'Öğrenci',
-  fullName: 'Öğrenci',
+  fullName: '',
   email: '',
   avatarUrl: 'user',
-  totalXP: 450,
-  level: 3,
-  currentStreak: 3,
-  longestStreak: 5,
+  totalXP: 0,
+  level: 1,
+  currentStreak: 0,
+  longestStreak: 0,
   lastActiveDate: getTodayISO(),
-  badges: ['haftalik-istikrar', 'pisagor-ustasi'],
-  gems: 150,
+  badges: [],
+  gems: 0,
   hearts: 5,
   grade: 9,
   isRepeater: false,
@@ -57,10 +57,10 @@ const defaultUser: UserProfile = {
   isAuthenticated: false,
   placementTickets: 1,
   lastWeeklyClaimDate: getTodayISO(),
-  clanId: 'clan-fen-bilimleri',
-  clanRole: 'member',
-  clanContributionXP: 45,
-  masteredMistakesCount: 1,
+  clanId: null,
+  clanRole: null,
+  clanContributionXP: 0,
+  masteredMistakesCount: 0,
   settings: {
     theme: 'dark',
     soundEnabled: true,
@@ -74,7 +74,7 @@ const defaultQuests: DailyQuest[] = [
     type: 'quiz',
     description: '10 Quiz Sorusu Çöz',
     targetValue: 10,
-    currentValue: 4,
+    currentValue: 0,
     xpReward: 15,
     completed: false
   },
@@ -83,168 +83,26 @@ const defaultQuests: DailyQuest[] = [
     type: 'topic',
     description: '1 Yeni Konuyu Tamamla',
     targetValue: 1,
-    currentValue: 1,
+    currentValue: 0,
     xpReward: 20,
-    completed: true
+    completed: false
   },
   {
     id: 'quest-3',
     type: 'pomodoro',
     description: '25 Dakika Odaklanarak Çalış',
     targetValue: 25,
-    currentValue: 15,
+    currentValue: 0,
     xpReward: 25,
     completed: false
   }
 ];
 
-const initialTopicProgress: Record<string, TopicProgress> = {
-  'mat-u1-t1': {
-    topicId: 'mat-u1-t1',
-    masteryLevel: 100,
-    correctCount: 8,
-    totalAttempts: 8,
-    lastStudied: new Date().toISOString()
-  },
-  'mat-u1-t2': {
-    topicId: 'mat-u1-t2',
-    masteryLevel: 85,
-    correctCount: 7,
-    totalAttempts: 8,
-    lastStudied: new Date().toISOString()
-  },
-  'fiz-u1-t1': {
-    topicId: 'fiz-u1-t1',
-    masteryLevel: 90,
-    correctCount: 5,
-    totalAttempts: 6,
-    lastStudied: new Date().toISOString()
-  }
-};
+const initialTopicProgress: Record<string, TopicProgress> = {};
 
-const initialQuizHistory: QuizAttempt[] = [
-  {
-    id: 'hist-1',
-    topicId: 'mat-u1-t1',
-    score: 8,
-    totalQuestions: 8,
-    xpEarned: 24,
-    timeSpentSec: 145,
-    completedAt: new Date(Date.now() - 3600000 * 4).toISOString()
-  },
-  {
-    id: 'hist-2',
-    topicId: 'fiz-u1-t1',
-    score: 5,
-    totalQuestions: 6,
-    xpEarned: 15,
-    timeSpentSec: 110,
-    completedAt: new Date(Date.now() - 3600000 * 24).toISOString()
-  }
-];
+const initialQuizHistory: QuizAttempt[] = [];
 
-const initialMistakeVault: MistakeRecord[] = [
-  {
-    id: 'demo-mistake-1',
-    userId: 'student-main',
-    questionId: 'mat-u1-q1',
-    topicId: 'mat-u1-t1',
-    subjectId: 'matematik',
-    questionText: 'Aşağıdaki sayı kümelerinden hangisi rasyonel sayılar kümesini tam kapsar ve irrasyonel sayıları da içerir?',
-    options: [
-      'Doğal Sayılar (N)',
-      'Tam Sayılar (Z)',
-      'Gerçek (Reel) Sayılar (R)',
-      'Sayma Sayıları (N+)'
-    ],
-    correctAnswer: 2,
-    userAnswer: 1,
-    explanation: 'Gerçek (Reel) sayılar kümesi (R), rasyonel ve irrasyonel sayılar kümelerinin birleşimi olup her iki kümeyi de kapsar.',
-    learningOutcomeCode: 'MAT.9.1.1',
-    stage: 1,
-    nextReviewDate: new Date(Date.now() - 3600000 * 12).toISOString(),
-    lastReviewedAt: new Date(Date.now() - 3600000 * 24).toISOString(),
-    consecutiveCorrect: 0,
-    isMastered: false,
-    source: 'quiz',
-    createdAt: new Date(Date.now() - 3600000 * 24).toISOString(),
-  },
-  {
-    id: 'demo-mistake-2',
-    userId: 'student-main',
-    questionId: 'fiz-u1-q2',
-    topicId: 'fiz-u1-t1',
-    subjectId: 'fizik',
-    questionText: 'Aşağıda verilen fiziksel büyüklüklerden hangisi türetilmiş ve skaler bir büyüklüktür?',
-    options: [
-      'Kuvvet',
-      'Enerji (İş)',
-      'Hız',
-      'İvme'
-    ],
-    correctAnswer: 1,
-    userAnswer: 0,
-    explanation: 'Enerji (ve iş) temel büyüklüklerden türetilmiştir ve yönü olmadığı için skaler bir büyüklüktür. Kuvvet, hız ve ivme ise vektöreldir.',
-    learningOutcomeCode: 'FİZ.9.1.1',
-    stage: 2,
-    nextReviewDate: new Date(Date.now() - 3600000 * 2).toISOString(),
-    lastReviewedAt: new Date(Date.now() - 3600000 * 72).toISOString(),
-    consecutiveCorrect: 1,
-    isMastered: false,
-    source: 'scenario',
-    createdAt: new Date(Date.now() - 3600000 * 96).toISOString(),
-  },
-  {
-    id: 'demo-mistake-3',
-    userId: 'student-main',
-    questionId: 'kim-u1-q3',
-    topicId: 'kim-u1-t1',
-    subjectId: 'kimya',
-    questionText: 'Simyacıların kimya bilimine aktardığı en temel damıtma ve ayırma aracı aşağıdakilerden hangisidir?',
-    options: [
-      'İmbik',
-      'Büret',
-      'Spektrometre',
-      'Santrifüj'
-    ],
-    correctAnswer: 0,
-    userAnswer: 1,
-    explanation: 'Cabir bin Hayyan tarafından geliştirilen imbik, simyadan kimyaya aktarılan en temel damıtma cihazıdır.',
-    learningOutcomeCode: 'KİM.9.1.1',
-    stage: 1,
-    nextReviewDate: new Date(Date.now() - 3600000 * 1).toISOString(),
-    lastReviewedAt: new Date(Date.now() - 3600000 * 24).toISOString(),
-    consecutiveCorrect: 0,
-    isMastered: false,
-    source: 'placement',
-    createdAt: new Date(Date.now() - 3600000 * 24).toISOString(),
-  },
-  {
-    id: 'demo-mistake-4',
-    userId: 'student-main',
-    questionId: 'biy-u1-q1',
-    topicId: 'biy-u1-t1',
-    subjectId: 'biyoloji',
-    questionText: 'Canlıların tümünde ortak olarak gerçekleşen biyokimyasal olay hangisidir?',
-    options: [
-      'Fotosentez',
-      'Glikoliz (ATP üretimi)',
-      'Oksijenli Solunum',
-      'Nişasta Sentezi'
-    ],
-    correctAnswer: 1,
-    userAnswer: 1,
-    explanation: 'Glikoliz reaksiyonu tüm canlı hücrelerin sitoplazmasında ortak olarak gerçekleşir.',
-    learningOutcomeCode: 'BİY.9.1.1',
-    stage: 5,
-    nextReviewDate: new Date(Date.now() + 3600000 * 24 * 30).toISOString(),
-    lastReviewedAt: new Date(Date.now() - 3600000 * 48).toISOString(),
-    consecutiveCorrect: 4,
-    isMastered: true,
-    source: 'quiz',
-    createdAt: new Date(Date.now() - 3600000 * 24 * 30).toISOString(),
-  }
-];
+const initialMistakeVault: MistakeRecord[] = [];
 
 const initialDuelRooms: DuelRoom[] = [
   {
@@ -407,45 +265,9 @@ export const useUserStore = create<UserState>()(
       claimedChests: [],
       topicProgress: initialTopicProgress,
       quizHistory: initialQuizHistory,
-      streakDays: [
-        { date: getTodayISO(), minutesStudied: 25, xpEarned: 135, questionsAnswered: 14 }
-      ],
+      streakDays: [],
       dailyQuests: defaultQuests,
-      placementExamResults: [
-        {
-          id: 'initial-placement-1',
-          examDate: new Date(Date.now() - 3600000 * 48).toISOString(),
-          score: 72,
-          level: 'competent',
-          levelTitle: 'Yetkin Düzey (Kazanımlara Hakim)',
-          levelDescription: 'Temel kazanımlarda güçlü bir hakimiyet mevcut. Açık uçlu analitik sorularda işlem adımlarını gerekçelendirerek 85+ İleri Düzey seviyesine ulaşabilirsiniz.',
-          examType: 'karma',
-          subjectScores: [
-            { subjectSlug: 'matematik', subjectName: 'Matematik', score: 20, total: 25, percentage: 80 },
-            { subjectSlug: 'fizik', subjectName: 'Fizik', score: 18, total: 25, percentage: 72 },
-            { subjectSlug: 'edebiyat', subjectName: 'Türk Dili ve Edebiyatı', score: 20, total: 25, percentage: 80 },
-            { subjectSlug: 'kimya', subjectName: 'Kimya', score: 14, total: 25, percentage: 56 },
-          ],
-          remediationPlan: [
-            {
-              topicId: 'kim-u1-t2',
-              topicName: 'Kimyanın Alt Disiplinleri ve Meslekler',
-              subjectSlug: 'kimya',
-              subjectName: 'Kimya',
-              action: 'Kimya disiplinleri ve çalışma alanları konusunda 1 tekrar testi çöz.',
-              priority: 'high'
-            },
-            {
-              topicId: 'fiz-u2-t2',
-              topicName: 'Dayanıklılık, Adezyon ve Kohezyon',
-              subjectSlug: 'fizik',
-              subjectName: 'Fizik',
-              action: 'Adezyon-kohezyon karşılaştırmalı açık uçlu deney sorularını pekiştir.',
-              priority: 'medium'
-            }
-          ]
-        }
-      ],
+      placementExamResults: [],
       scenarioAttempts: [],
       clans: initialClans,
       mistakeVault: initialMistakeVault,
@@ -757,16 +579,20 @@ export const useUserStore = create<UserState>()(
 
       loginWithGoogle: (account) => {
         const current = get().user;
+        const isSameUser = Boolean(current.email && current.email === account.email);
         const isAlreadyOnboarded = account.isOnboarded !== undefined
           ? account.isOnboarded
-          : (current.email === account.email && Boolean(current.isOnboarded));
+          : Boolean(isSameUser && current.isOnboarded);
+
+        const baseUser = isSameUser ? current : defaultUser;
+
         const updatedUser: UserProfile = {
-          ...current,
-          id: account.id || (current.email === account.email && current.id ? current.id : `google-${Date.now()}`),
+          ...baseUser,
+          id: account.id || (isSameUser && current.id ? current.id : `google-${Date.now()}`),
           email: account.email,
           fullName: account.fullName,
-          username: account.fullName || current.username || 'Öğrenci',
-          avatarUrl: account.avatarUrl || current.avatarUrl || 'user',
+          username: account.fullName || 'Öğrenci',
+          avatarUrl: account.avatarUrl || 'user',
           isAuthenticated: true,
           isOnboarded: isAlreadyOnboarded,
           lastActiveDate: getTodayISO(),

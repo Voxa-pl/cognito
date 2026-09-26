@@ -167,22 +167,22 @@ export default function TopNav() {
           {/* Streak Counter (Günlük Çalışma Disiplini) */}
           <div
             className="flex items-center gap-1.5 rounded-2xl border-2 border-[#e5e5e5] dark:border-[#334155] bg-white dark:bg-[#1e293b] px-2.5 sm:px-3 py-1.5 shadow-sm transition-all hover:border-[#ff9600]/40"
-            title={`${user?.currentStreak || 3} Günlük Çalışma Disiplini`}
+            title={`${user?.currentStreak ?? 0} Günlük Çalışma Disiplini`}
           >
             <Flame className="h-5 w-5 fill-[#ff9600] text-[#ff9600] animate-pulse" />
             <span className="text-xs sm:text-sm font-black text-[#ff9600]">
-              {user?.currentStreak || 3}
+              {user?.currentStreak ?? 0}
             </span>
           </div>
 
           {/* Academic XP Counter */}
           <div
             className="flex items-center gap-1.5 rounded-2xl border-2 border-[#e5e5e5] dark:border-[#334155] bg-white dark:bg-[#1e293b] px-2.5 sm:px-3 py-1.5 shadow-sm transition-all hover:border-[#1cb0f6]/40"
-            title={`${user?.totalXP || 450} Akademik Başarı Puanı (XP)`}
+            title={`${user?.totalXP ?? 0} Akademik Başarı Puanı (XP)`}
           >
             <Target className="h-4.5 w-4.5 text-[#1cb0f6] stroke-[2.5]" />
             <span className="text-xs sm:text-sm font-black text-[#1cb0f6]">
-              {user?.totalXP || 450} XP
+              {user?.totalXP ?? 0} XP
             </span>
           </div>
 
