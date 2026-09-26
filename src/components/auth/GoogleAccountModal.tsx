@@ -121,7 +121,7 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-public-key`;
       email: 'demo@cognito.edu.tr',
       fullName: 'Demo Öğrenci',
       avatarUrl: 'user',
-      isOnboarded: true,
+      isOnboarded: false,
     });
   };
 
@@ -170,8 +170,33 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-public-key`;
           </div>
         )}
 
+        {/* Primary Demo Student Bypass Button */}
+        <div className="mt-5 space-y-2">
+          <button
+            type="button"
+            onClick={handleDemoLogin}
+            className="btn-duo btn-duo-green flex w-full items-center justify-center gap-2.5 py-4 rounded-2xl text-sm font-black text-white cursor-pointer shadow-md transition-transform hover:scale-[1.01]"
+          >
+            <UserCheck className="w-5 h-5" />
+            <span>Demo Öğrenci Olarak Başla (Sınıf &amp; Seviye Soruları ile)</span>
+          </button>
+          <p className="text-center text-[11px] font-semibold text-slate-500 dark:text-[#94a3b8] leading-relaxed">
+            Sınıf seviyesi ve sınıf tekrarı (Phoenix modu) sorularını yanıtlayarak platforma hemen giriş yapın.
+          </p>
+        </div>
+
+        {/* Divider */}
+        <div className="relative my-5">
+          <div className="absolute inset-0 flex items-center">
+            <div className="w-full border-t border-slate-200 dark:border-[#334155]" />
+          </div>
+          <div className="relative flex justify-center text-[10px] uppercase font-black tracking-widest text-slate-500 dark:text-[#94a3b8] bg-white dark:bg-[#1e293b] px-3">
+            VEYA GELİŞTİRİCİ SUPABASE BAĞLANTISI
+          </div>
+        </div>
+
         {/* Fast Browser Connect Form */}
-        <form onSubmit={handleSaveAndConnect} className="mt-4 space-y-3.5">
+        <form onSubmit={handleSaveAndConnect} className="space-y-3">
           <div className="space-y-1">
             <label className="block text-xs font-black text-slate-800 dark:text-[#f8fafc]">
               Supabase Project URL
@@ -181,7 +206,7 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-public-key`;
               placeholder="https://your-project.supabase.co"
               value={supabaseUrl}
               onChange={(e) => setSupabaseUrl(e.target.value)}
-              className="w-full rounded-xl border-2 border-slate-200 dark:border-[#334155] bg-slate-50 dark:bg-[#0f172a] px-3.5 py-2.5 text-xs sm:text-sm font-mono text-slate-900 dark:text-[#f8fafc] placeholder:text-slate-400 dark:placeholder:text-[#94a3b8]/70 focus:border-[#1cb0f6] focus:dark:border-[#1cb0f6] outline-hidden transition-all"
+              className="w-full rounded-xl border-2 border-slate-200 dark:border-[#334155] bg-slate-50 dark:bg-[#0f172a] px-3.5 py-2 text-xs sm:text-sm font-mono text-slate-900 dark:text-[#f8fafc] placeholder:text-slate-400 dark:placeholder:text-[#94a3b8]/70 focus:border-[#1cb0f6] focus:dark:border-[#1cb0f6] outline-hidden transition-all"
             />
           </div>
 
@@ -194,14 +219,14 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-public-key`;
               placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
               value={supabaseAnonKey}
               onChange={(e) => setSupabaseAnonKey(e.target.value)}
-              className="w-full rounded-xl border-2 border-slate-200 dark:border-[#334155] bg-slate-50 dark:bg-[#0f172a] px-3.5 py-2.5 text-xs sm:text-sm font-mono text-slate-900 dark:text-[#f8fafc] placeholder:text-slate-400 dark:placeholder:text-[#94a3b8]/70 focus:border-[#1cb0f6] focus:dark:border-[#1cb0f6] outline-hidden transition-all"
+              className="w-full rounded-xl border-2 border-slate-200 dark:border-[#334155] bg-slate-50 dark:bg-[#0f172a] px-3.5 py-2 text-xs sm:text-sm font-mono text-slate-900 dark:text-[#f8fafc] placeholder:text-slate-400 dark:placeholder:text-[#94a3b8]/70 focus:border-[#1cb0f6] focus:dark:border-[#1cb0f6] outline-hidden transition-all"
             />
           </div>
 
           <button
             type="submit"
             disabled={submitting}
-            className="btn-duo btn-duo-blue flex w-full items-center justify-center gap-2 py-3.5 rounded-2xl text-xs sm:text-sm font-black text-white cursor-pointer shadow-sm transition-all"
+            className="btn-duo btn-duo-blue flex w-full items-center justify-center gap-2 py-3 rounded-2xl text-xs sm:text-sm font-black text-white cursor-pointer shadow-sm transition-all"
           >
             {submitting ? (
               <>
@@ -218,15 +243,15 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-public-key`;
         </form>
 
         {/* Copyable .env.local Reference */}
-        <div className="mt-4 rounded-2xl bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] p-3.5">
-          <div className="flex items-center justify-between mb-1.5">
-            <span className="text-[11px] font-bold text-slate-600 dark:text-[#94a3b8]">
+        <div className="mt-3.5 rounded-2xl bg-slate-50 dark:bg-[#0f172a] border border-slate-200 dark:border-[#334155] p-3">
+          <div className="flex items-center justify-between mb-1">
+            <span className="text-[10px] font-bold text-slate-600 dark:text-[#94a3b8]">
               Manuel Kurulum (<code className="font-mono">.env.local</code>)
             </span>
             <button
               type="button"
               onClick={handleCopy}
-              className="inline-flex items-center gap-1.5 text-[11px] font-black text-[#1cb0f6] dark:text-[#38bdf8] hover:underline cursor-pointer"
+              className="inline-flex items-center gap-1 text-[10px] font-black text-[#1cb0f6] dark:text-[#38bdf8] hover:underline cursor-pointer"
             >
               {copied ? (
                 <>
@@ -241,34 +266,10 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-public-key`;
               )}
             </button>
           </div>
-          <pre className="text-[11px] font-mono text-emerald-600 dark:text-emerald-400 overflow-x-auto select-all leading-relaxed">
+          <pre className="text-[10px] font-mono text-emerald-600 dark:text-emerald-400 overflow-x-auto select-all leading-relaxed">
             {envSnippet}
           </pre>
         </div>
-
-        {/* Divider */}
-        <div className="relative my-4">
-          <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-slate-200 dark:border-[#334155]" />
-          </div>
-          <div className="relative flex justify-center text-[10px] uppercase font-black tracking-widest text-slate-500 dark:text-[#94a3b8] bg-white dark:bg-[#1e293b] px-3">
-            VEYA ANINDA TEST ETMEK İÇİN
-          </div>
-        </div>
-
-        {/* Demo Account Direct Bypass Button */}
-        <button
-          type="button"
-          onClick={handleDemoLogin}
-          className="btn-duo btn-duo-green flex w-full items-center justify-center gap-2 py-3.5 rounded-2xl text-xs sm:text-sm font-black text-white cursor-pointer shadow-sm"
-        >
-          <UserCheck className="w-4 h-4" />
-          <span>Geliştirici / Demo Hesabı ile Test Et</span>
-        </button>
-
-        <p className="mt-2.5 text-center text-[11px] font-semibold text-slate-600 dark:text-[#94a3b8] leading-relaxed">
-          Demo butonu, OAuth anahtarları olmadan tüm akademik dersleri, kazanım testlerini ve paneli anında incelemenizi sağlar.
-        </p>
       </div>
     </div>
   );
