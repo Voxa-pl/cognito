@@ -21,31 +21,36 @@ export async function POST(request: Request) {
       );
     }
 
-    const envFilePath = path.join(process.cwd(), '.env.local');
-    let content = '';
+    try {
+      const envFilePath = path.join(process.cwd(), '.env.local');
+      let content = '';
 
-    if (fs.existsSync(envFilePath)) {
-      content = fs.readFileSync(envFilePath, 'utf8');
-      if (/NEXT_PUBLIC_SUPABASE_URL=.*/.test(content)) {
-        content = content.replace(/NEXT_PUBLIC_SUPABASE_URL=.*/, `NEXT_PUBLIC_SUPABASE_URL=${supabaseUrl.trim()}`);
+      if (fs.existsSync(envFilePath)) {
+        content = fs.readFileSync(envFilePath, 'utf8');
+        if (/NEXT_PUBLIC_SUPABASE_URL=.*/.test(content)) {
+          content = content.replace(/NEXT_PUBLIC_SUPABASE_URL=.*/, `NEXT_PUBLIC_SUPABASE_URL=${supabaseUrl.trim()}`);
+        } else {
+          content += `\nNEXT_PUBLIC_SUPABASE_URL=${supabaseUrl.trim()}`;
+        }
+
+        if (/NEXT_PUBLIC_SUPABASE_ANON_KEY=.*/.test(content)) {
+          content = content.replace(/NEXT_PUBLIC_SUPABASE_ANON_KEY=.*/, `NEXT_PUBLIC_SUPABASE_ANON_KEY=${supabaseAnonKey.trim()}`);
+        } else {
+          content += `\nNEXT_PUBLIC_SUPABASE_ANON_KEY=${supabaseAnonKey.trim()}`;
+        }
       } else {
-        content += `\nNEXT_PUBLIC_SUPABASE_URL=${supabaseUrl.trim()}`;
+        content = `# Supabase Environment Configuration\nNEXT_PUBLIC_SUPABASE_URL=${supabaseUrl.trim()}\nNEXT_PUBLIC_SUPABASE_ANON_KEY=${supabaseAnonKey.trim()}\n`;
       }
 
-      if (/NEXT_PUBLIC_SUPABASE_ANON_KEY=.*/.test(content)) {
-        content = content.replace(/NEXT_PUBLIC_SUPABASE_ANON_KEY=.*/, `NEXT_PUBLIC_SUPABASE_ANON_KEY=${supabaseAnonKey.trim()}`);
-      } else {
-        content += `\nNEXT_PUBLIC_SUPABASE_ANON_KEY=${supabaseAnonKey.trim()}`;
-      }
-    } else {
-      content = `# Supabase Environment Configuration\nNEXT_PUBLIC_SUPABASE_URL=${supabaseUrl.trim()}\nNEXT_PUBLIC_SUPABASE_ANON_KEY=${supabaseAnonKey.trim()}\n`;
+      fs.writeFileSync(envFilePath, content.trim() + '\n', 'utf8');
+    } catch {
+      // In serverless / read-only production environments like Vercel, writing to disk is gracefully ignored
     }
 
-    fs.writeFileSync(envFilePath, content.trim() + '\n', 'utf8');
-
-    // Also update runtime process environment in active node server process
-    process.env.NEXT_PUBLIC_SUPABASE_URL = supabaseUrl.trim();
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY = supabaseAnonKey.trim();
+    // Safely assign via bracket notation to prevent Webpack DefinePlugin rvalue replacement
+    const envObj = process.env as Record<string, string | undefined>;
+    envObj['NEXT_PUBLIC_SUPABASE_URL'] = supabaseUrl.trim();
+    envObj['NEXT_PUBLIC_SUPABASE_ANON_KEY'] = supabaseAnonKey.trim();
 
     return NextResponse.json({
       success: true,
