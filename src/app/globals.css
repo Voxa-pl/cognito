@@ -1,0 +1,535 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  /* Default Super Duolingo Dark Theme */
+  --bg-page: #0f172a;
+  --bg-subtle: #131f24;
+  --bg-card: #1e293b;
+  --bg-card-secondary: #1b2930;
+  --border-subtle: #334155;
+  --border-darker: #283a45;
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  
+  /* Duolingo Brand Palette */
+  --duo-green: #58cc02;
+  --duo-green-shadow: #3f9600;
+  --duo-blue: #1cb0f6;
+  --duo-blue-shadow: #168ec7;
+  --duo-orange: #ff9600;
+  --duo-orange-shadow: #e68700;
+  --duo-yellow: #ffc800;
+  --duo-yellow-shadow: #d49b00;
+  --duo-red: #ff4b4b;
+  --duo-red-shadow: #ea2b2b;
+  --duo-purple: #ce82ff;
+  --duo-purple-shadow: #a560e8;
+  --duo-gray: #334155;
+  --duo-gray-shadow: #1e293b;
+}
+
+html.light,
+:root[data-theme="light"],
+body.light {
+  --bg-page: #f7f7f7;
+  --bg-subtle: #ffffff;
+  --bg-card: #ffffff;
+  --bg-card-secondary: #f7f7f7;
+  --border-subtle: #e5e5e5;
+  --border-darker: #cecece;
+  --text-primary: #3c3c3c;
+  --text-secondary: #777777;
+  --text-muted: #afafaf;
+  
+  --duo-green: #58cc02;
+  --duo-green-shadow: #58a700;
+  --duo-blue: #1cb0f6;
+  --duo-blue-shadow: #1899d6;
+  --duo-orange: #ff9600;
+  --duo-orange-shadow: #e68700;
+  --duo-yellow: #ffc800;
+  --duo-yellow-shadow: #e5a500;
+  --duo-red: #ff4b4b;
+  --duo-red-shadow: #ea2b2b;
+  --duo-purple: #ce82ff;
+  --duo-purple-shadow: #a560e8;
+  --duo-gray: #e5e5e5;
+  --duo-gray-shadow: #afafaf;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--bg-page);
+  color: var(--text-primary);
+}
+
+body {
+  background-color: var(--bg-page);
+  color: var(--text-primary);
+  font-family: var(--font-inter), system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Super Duolingo Dark Scrollbar (Default) */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0f172a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 9999px;
+  border: 2px solid #0f172a;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
+
+html.light ::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+html.light ::-webkit-scrollbar-thumb {
+  background: #cecece;
+  border: 2px solid #f1f1f1;
+}
+
+html.light ::-webkit-scrollbar-thumb:hover {
+  background: #afafaf;
+}
+
+::selection {
+  background-color: rgba(28, 176, 246, 0.3);
+  color: #38bdf8;
+}
+
+html.light ::selection {
+  background-color: #ddf4ff;
+  color: #1cb0f6;
+}
+
+/* ==========================================================================
+   AUTHENTIC DUOLINGO 3D TACTILE BUTTONS
+   ========================================================================== */
+
+.btn-duo {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border-radius: 1rem;
+  transition: transform 0.1s cubic-bezier(0.4, 0, 0.2, 1), border-bottom-width 0.1s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.15s, box-shadow 0.15s;
+  user-select: none;
+  cursor: pointer;
+  border-bottom-width: 4px;
+}
+
+.btn-duo:active:not(:disabled) {
+  transform: translateY(2px);
+  border-bottom-width: 2px;
+}
+
+.btn-duo:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* Green (Feather Green) */
+.btn-duo-green {
+  background-color: #58cc02;
+  border-color: #58a700;
+  color: #ffffff;
+}
+.btn-duo-green:hover:not(:disabled) {
+  background-color: #61e002;
+}
+.btn-duo-green:active:not(:disabled) {
+  background-color: #58cc02;
+  border-color: #58a700;
+}
+
+/* Sky Blue */
+.btn-duo-blue {
+  background-color: #1cb0f6;
+  border-color: #1899d6;
+  color: #ffffff;
+}
+.btn-duo-blue:hover:not(:disabled) {
+  background-color: #2bc4ff;
+}
+.btn-duo-blue:active:not(:disabled) {
+  background-color: #1cb0f6;
+  border-color: #1899d6;
+}
+
+/* Fox Orange */
+.btn-duo-orange {
+  background-color: #ff9600;
+  border-color: #e68700;
+  color: #ffffff;
+}
+.btn-duo-orange:hover:not(:disabled) {
+  background-color: #ffa826;
+}
+.btn-duo-orange:active:not(:disabled) {
+  background-color: #ff9600;
+  border-color: #e68700;
+}
+
+/* Golden Yellow */
+.btn-duo-yellow {
+  background-color: #ffc800;
+  border-color: #e5a500;
+  color: #4b4b4b;
+}
+.btn-duo-yellow:hover:not(:disabled) {
+  background-color: #ffd633;
+}
+.btn-duo-yellow:active:not(:disabled) {
+  background-color: #ffc800;
+  border-color: #e5a500;
+}
+
+/* Cardinal Red */
+.btn-duo-red {
+  background-color: #ff4b4b;
+  border-color: #ea2b2b;
+  color: #ffffff;
+}
+.btn-duo-red:hover:not(:disabled) {
+  background-color: #ff6161;
+}
+.btn-duo-red:active:not(:disabled) {
+  background-color: #ff4b4b;
+  border-color: #ea2b2b;
+}
+
+/* Purple */
+.btn-duo-purple {
+  background-color: #ce82ff;
+  border-color: #a560e8;
+  color: #ffffff;
+}
+.btn-duo-purple:hover:not(:disabled) {
+  background-color: #d999ff;
+}
+.btn-duo-purple:active:not(:disabled) {
+  background-color: #ce82ff;
+  border-color: #a560e8;
+}
+
+/* White / Secondary */
+.btn-duo-white {
+  background-color: #ffffff;
+  border-width: 2px;
+  border-style: solid;
+  border-color: #e5e5e5;
+  border-bottom-width: 4px;
+  border-bottom-color: #cecece;
+  color: #4b4b4b;
+}
+.btn-duo-white:hover:not(:disabled) {
+  background-color: #f7f7f7;
+  border-color: #d8d8d8;
+  border-bottom-color: #b8b8b8;
+}
+.btn-duo-white:active:not(:disabled) {
+  background-color: #f0f0f0;
+  border-bottom-width: 2px;
+}
+
+/* Disabled */
+.btn-duo-disabled {
+  background-color: #e5e5e5;
+  border-color: #cecece;
+  border-bottom-width: 4px;
+  color: #afafaf;
+  cursor: not-allowed;
+}
+
+/* Dark Mode 3D Button Shadows (Feather Green #58cc02/shadow #3f9600, Sky Blue #1cb0f6/shadow #168ec7, Gold #ffc800/shadow #d49b00) */
+html.dark .btn-duo-green,
+:root:not(.light) .btn-duo-green {
+  background-color: #58cc02;
+  border-color: #3f9600;
+}
+html.dark .btn-duo-green:hover:not(:disabled),
+:root:not(.light) .btn-duo-green:hover:not(:disabled) {
+  background-color: #61e002;
+}
+html.dark .btn-duo-green:active:not(:disabled),
+:root:not(.light) .btn-duo-green:active:not(:disabled) {
+  background-color: #58cc02;
+  border-color: #3f9600;
+}
+
+html.dark .btn-duo-blue,
+:root:not(.light) .btn-duo-blue {
+  background-color: #1cb0f6;
+  border-color: #168ec7;
+}
+html.dark .btn-duo-blue:hover:not(:disabled),
+:root:not(.light) .btn-duo-blue:hover:not(:disabled) {
+  background-color: #2bc4ff;
+}
+html.dark .btn-duo-blue:active:not(:disabled),
+:root:not(.light) .btn-duo-blue:active:not(:disabled) {
+  background-color: #1cb0f6;
+  border-color: #168ec7;
+}
+
+html.dark .btn-duo-yellow,
+:root:not(.light) .btn-duo-yellow {
+  background-color: #ffc800;
+  border-color: #d49b00;
+  color: #1e293b;
+}
+html.dark .btn-duo-yellow:hover:not(:disabled),
+:root:not(.light) .btn-duo-yellow:hover:not(:disabled) {
+  background-color: #ffd633;
+}
+html.dark .btn-duo-yellow:active:not(:disabled),
+:root:not(.light) .btn-duo-yellow:active:not(:disabled) {
+  background-color: #ffc800;
+  border-color: #d49b00;
+}
+
+html.dark .btn-duo-orange,
+:root:not(.light) .btn-duo-orange {
+  background-color: #ff9600;
+  border-color: #e68700;
+}
+
+html.dark .btn-duo-red,
+:root:not(.light) .btn-duo-red {
+  background-color: #ff4b4b;
+  border-color: #ea2b2b;
+}
+
+html.dark .btn-duo-white,
+:root:not(.light) .btn-duo-white {
+  background-color: #1e293b;
+  border-color: #334155;
+  border-bottom-color: #131f24;
+  color: #f8fafc;
+}
+html.dark .btn-duo-white:hover:not(:disabled),
+:root:not(.light) .btn-duo-white:hover:not(:disabled) {
+  background-color: #283a45;
+  border-color: #475569;
+  border-bottom-color: #1e293b;
+  color: #ffffff;
+}
+html.dark .btn-duo-white:active:not(:disabled),
+:root:not(.light) .btn-duo-white:active:not(:disabled) {
+  background-color: #1b2930;
+  border-bottom-width: 2px;
+}
+
+html.dark .btn-duo-disabled,
+:root:not(.light) .btn-duo-disabled {
+  background-color: #1e293b;
+  border-color: #334155;
+  border-bottom-width: 4px;
+  border-bottom-color: #0f172a;
+  color: #64748b;
+  cursor: not-allowed;
+}
+
+/* Super Duolingo Dark Theme utility overrides */
+html.dark .bg-white,
+:root:not(.light) .bg-white {
+  background-color: #1e293b;
+}
+
+html.dark .bg-white\/95,
+:root:not(.light) .bg-white\/95 {
+  background-color: rgba(19, 31, 36, 0.95);
+}
+
+html.dark .bg-\[\#f7f7f7\],
+:root:not(.light) .bg-\[\#f7f7f7\] {
+  background-color: #0f172a;
+}
+
+html.dark .bg-\[\#f1f1f1\],
+:root:not(.light) .bg-\[\#f1f1f1\] {
+  background-color: #131f24;
+}
+
+html.dark .border-\[\#e5e5e5\],
+:root:not(.light) .border-\[\#e5e5e5\] {
+  border-color: #334155;
+}
+
+html.dark .border-b-\[\#cecece\],
+:root:not(.light) .border-b-\[\#cecece\] {
+  border-bottom-color: #283a45;
+}
+
+html.dark .border-\[\#cecece\],
+:root:not(.light) .border-\[\#cecece\] {
+  border-color: #283a45;
+}
+
+html.dark .text-\[\#3c3c3c\],
+:root:not(.light) .text-\[\#3c3c3c\],
+html.dark .text-\[\#1a202c\],
+:root:not(.light) .text-\[\#1a202c\],
+html.dark .text-\[\#202124\],
+:root:not(.light) .text-\[\#202124\],
+html.dark .text-\[\#2d3748\],
+:root:not(.light) .text-\[\#2d3748\],
+html.dark .text-\[\#1e293b\],
+:root:not(.light) .text-\[\#1e293b\] {
+  color: #f8fafc;
+}
+
+html.dark .text-\[\#4b4b4b\],
+:root:not(.light) .text-\[\#4b4b4b\] {
+  color: #e2e8f0;
+}
+
+html.dark .text-\[\#777777\],
+:root:not(.light) .text-\[\#777777\],
+html.dark .text-\[\#718096\],
+:root:not(.light) .text-\[\#718096\],
+html.dark .text-\[\#5f6368\],
+:root:not(.light) .text-\[\#5f6368\] {
+  color: #94a3b8;
+}
+
+html.dark .text-\[\#afafaf\],
+:root:not(.light) .text-\[\#afafaf\],
+html.dark .text-\[\#a0aec0\],
+:root:not(.light) .text-\[\#a0aec0\] {
+  color: #64748b;
+}
+
+html.dark .border-\[\#dadce0\],
+:root:not(.light) .border-\[\#dadce0\] {
+  border-color: #334155;
+}
+
+html.dark .bg-\[\#f8f9fa\],
+:root:not(.light) .bg-\[\#f8f9fa\],
+html.dark .bg-\[\#f1f3f4\],
+:root:not(.light) .bg-\[\#f1f3f4\] {
+  background-color: #131f24;
+}
+
+/* Semi-transparent badges in dark mode */
+html.dark .bg-\[\#ddf4ff\],
+:root:not(.light) .bg-\[\#ddf4ff\] {
+  background-color: rgba(28, 176, 246, 0.16);
+}
+html.dark .border-\[\#84d8ff\],
+:root:not(.light) .border-\[\#84d8ff\] {
+  border-color: rgba(28, 176, 246, 0.45);
+}
+
+html.dark .bg-\[\#e5f8d0\],
+:root:not(.light) .bg-\[\#e5f8d0\] {
+  background-color: rgba(88, 204, 2, 0.16);
+}
+html.dark .border-\[\#bcf087\],
+:root:not(.light) .border-\[\#bcf087\] {
+  border-color: rgba(88, 204, 2, 0.45);
+}
+
+html.dark .bg-\[\#fff0db\],
+:root:not(.light) .bg-\[\#fff0db\] {
+  background-color: rgba(255, 150, 0, 0.16);
+}
+html.dark .border-\[\#ffb74d\],
+:root:not(.light) .border-\[\#ffb74d\] {
+  border-color: rgba(255, 150, 0, 0.45);
+}
+
+html.dark .bg-\[\#ffdfe0\],
+:root:not(.light) .bg-\[\#ffdfe0\] {
+  background-color: rgba(255, 75, 75, 0.16);
+}
+html.dark .border-\[\#ffb4b4\],
+:root:not(.light) .border-\[\#ffb4b4\] {
+  border-color: rgba(255, 75, 75, 0.45);
+}
+
+/* ==========================================================================
+   AUTHENTIC DUOLINGO 3D CIRCULAR LESSON NODES
+   ========================================================================== */
+
+.node-3d {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.15s;
+  user-select: none;
+  cursor: pointer;
+}
+
+.node-3d:hover:not(.node-locked) {
+  transform: translateY(-3px) scale(1.03);
+}
+
+.node-3d:active:not(.node-locked) {
+  transform: translateY(3px) scale(0.98);
+}
+
+/* Active Node Pulsing Glow Ring */
+@keyframes duo-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(88, 204, 2, 0.6), 0 8px 0 var(--node-shadow, #58a700);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(88, 204, 2, 0), 0 8px 0 var(--node-shadow, #58a700);
+  }
+}
+
+.node-active-pulse {
+  animation: duo-pulse 2s infinite cubic-bezier(0.4, 0, 0.6, 1);
+}
+
+/* Floating BAŞLA Bubble */
+@keyframes duo-bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.speech-bubble-bounce {
+  animation: duo-bounce 1.6s ease-in-out infinite;
+}
+
+/* Bottom Sheet Slide Up Animation */
+@keyframes slide-up {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
