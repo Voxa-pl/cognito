@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import Sidebar from '@/components/layout/Sidebar';
 import TopNav from '@/components/layout/TopNav';
+import BottomNav from '@/components/layout/BottomNav';
 import { useUserStore } from '@/stores/useUserStore';
 import { AppLoadingScreen } from '@/components/common/AppLoadingScreen';
 
@@ -61,14 +62,15 @@ export default function MainLayout({
   return (
     <div className="flex min-h-screen bg-[#f7f7f7] dark:bg-[#0f172a] text-[#3c3c3c] dark:text-[#f8fafc]">
       <Sidebar />
-      <div className="flex-1 flex flex-col md:ml-64 min-h-screen pb-8">
+      <div className="flex-1 flex flex-col md:ml-64 min-h-screen pb-24 md:pb-8">
         <TopNav />
         <main className="flex-1">
-          <div className="mx-auto max-w-7xl p-6 md:p-8">
+          <div className="mx-auto max-w-7xl p-4 sm:p-6 md:p-8">
             {children}
           </div>
         </main>
       </div>
+      <BottomNav />
     </div>
   );
 }

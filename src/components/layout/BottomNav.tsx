@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Compass, BookOpen, GraduationCap, Users, User } from 'lucide-react';
+import { Compass, BookOpen, Swords, GraduationCap, User } from 'lucide-react';
 import { sounds } from '@/lib/sound';
 
 export default function BottomNav() {
@@ -21,8 +21,8 @@ export default function BottomNav() {
   const navItems = [
     { name: 'Öğren', href: '/dashboard', icon: Compass },
     { name: 'Dersler', href: '/subjects', icon: BookOpen },
+    { name: 'Düello', href: '/duels', icon: Swords },
     { name: 'Sınavlar', href: '/exams', icon: GraduationCap },
-    { name: 'Klanlar', href: '/clans', icon: Users },
     { name: 'Profil', href: '/profile', icon: User },
   ];
 

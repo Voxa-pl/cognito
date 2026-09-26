@@ -100,7 +100,7 @@ export default function TopNav() {
               <span className="text-[10px] font-black uppercase tracking-wider text-[#afafaf] dark:text-[#64748b]">
                 AKTİF DERS
               </span>
-              <span className="text-xs sm:text-sm font-black text-[#3c3c3c] dark:text-[#f8fafc]">
+              <span className="text-xs sm:text-sm font-black text-[#3c3c3c] dark:text-[#f8fafc] max-w-[85px] sm:max-w-none truncate">
                 {activeSubject.name}
               </span>
             </div>
@@ -203,7 +203,7 @@ export default function TopNav() {
               {selectedMode === 'challenge' ? (
                 <>
                   <Shield className="h-4.5 w-4.5 text-[#ff4b4b] stroke-[2.5]" />
-                  <span className="text-xs sm:text-sm font-black text-[#ff4b4b]">
+                  <span className="text-xs sm:text-sm font-black text-[#ff4b4b] hidden sm:inline">
                     Sınav Modu
                   </span>
                 </>
