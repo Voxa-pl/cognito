@@ -47,10 +47,6 @@ export async function POST(request: Request) {
       // In serverless / read-only production environments like Vercel, writing to disk is gracefully ignored
     }
 
-    // Safely assign via bracket notation to prevent Webpack DefinePlugin rvalue replacement
-    const envObj = process.env as Record<string, string | undefined>;
-    envObj['NEXT_PUBLIC_SUPABASE_URL'] = supabaseUrl.trim();
-    envObj['NEXT_PUBLIC_SUPABASE_ANON_KEY'] = supabaseAnonKey.trim();
 
     return NextResponse.json({
       success: true,
